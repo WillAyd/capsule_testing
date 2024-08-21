@@ -36,6 +36,8 @@ skip = "*musllinux*"
 test-command = "python -m pytest {project}/tests"
 test-requires = ["pytest", "pyarrow"]
 
+build-frontend = "pip; args: -v"
+
 [tool.cibuildwheel.linux]
 repair-wheel-command = """
 auditwheel repair -w {dest_dir} {wheel}
