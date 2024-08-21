@@ -39,6 +39,9 @@ skip = "*musllinux*"
 test-command = "python -m pytest {project}/tests"
 test-requires = ["pytest", "pyarrow"]
 
+build-frontend = "pip; args: -v"
+config-settings = 'compile-args="-v"'
+
 [tool.meson-python.args]
 compile = ['-v']
 install = ['--skip-subprojects']
