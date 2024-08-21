@@ -39,5 +39,3 @@ skip = "*musllinux*"
 test-command = "python -m pytest {project}/tests"
 test-requires = ["pytest", "pyarrow"]
 
-[tool.meson-python.args]
-install = ['--skip-subprojects']
