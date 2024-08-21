@@ -31,6 +31,7 @@ classifiers = [
 
 [tool.cibuildwheel]
 build = "cp39-*64 cp310-*64 cp311-*64 cp312-*64"
+skip = "*musllinux*"
 
 test-command = "python -m pytest {project}/tests"
 test-requires = ["pytest", "pyarrow"]
