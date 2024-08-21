@@ -1,6 +1,8 @@
 #include <nanoarrow/nanoarrow.hpp>
 #include <nanobind/nanobind.h>
 
+#include <sstream>
+
 namespace nb = nanobind;
 
 auto CheckData(nb::object obj) {
@@ -46,24 +48,26 @@ auto CheckData(nb::object obj) {
     const char first_value[] = "12345678901234567890";
     if (strncmp(reinterpret_cast<const char *>(buffer.data), first_value,
                 buffer.size_bytes)) {
-      throw nb::value_error(
-          "first record did not match expectation - expected: " +
-          std::string(first_value) + " got: " +
-          std::string{reinterpret_cast<const char *>(buffer.data),
-                      buffer.size_bytes});
+      std::stringstream ss;
+      ss << "first record did not match expectation - expected: " << first_value
+         << " got: "
+         << std::string{reinterpret_cast<const char *>(buffer.data),
+                        static_cast<size_t>(buffer.size_bytes)};
+      throw nb::value_error(ss.str().c_str());
     }
     ArrowBufferReset(&buffer);
 
     ArrowArrayViewGetDecimalUnsafe(array_view.get(), 1, &decimal);
     NANOARROW_THROW_NOT_OK(ArrowDecimalAppendDigitsToBuffer(&decimal, &buffer));
-    const char first_value[] = "-998765432109876543210";
+    const char second_value[] = "-998765432109876543210";
     if (strncmp(reinterpret_cast<const char *>(buffer.data), second_value,
                 buffer.size_bytes)) {
-      throw nb::value_error(
-          "second record did not match expectation - expected: " +
-          std::string(second_value) + " got: " +
-          std::string{reinterpret_cast<const char *>(buffer.data),
-                      buffer.size_bytes});
+      std::stringstream ss;
+      ss << "second record did not match expectation - expected: "
+         << second_value << " got: "
+         << std::string{reinterpret_cast<const char *>(buffer.data),
+                        static_cast<size_t>(buffer.size_bytes)};
+      throw nb::value_error(ss.str().c_str());
     }
     ArrowBufferReset(&buffer);
   }
