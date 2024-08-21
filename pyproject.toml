@@ -1,9 +1,12 @@
 [build-system]
 requires = [
-  "scikit-build-core",
-  "nanobind",
+  'meson-python',
+  'meson',
+  'cmake',  # for nanobind
+  'wheel',
 ]
-build-backend = "scikit_build_core.build"
+
+build-backend= 'mesonpy'
 
 [project]
 name = 'capsule_bug'
@@ -36,18 +39,12 @@ skip = "*musllinux*"
 test-command = "python -m pytest {project}/tests"
 test-requires = ["pytest", "pyarrow"]
 
-[tool.cibuildwheel.linux]
-repair-wheel-command = """
-auditwheel repair -w {dest_dir} {wheel}
-"""
+build-frontend = "pip; args: -v"
+config-settings = 'compile-args="-v"'
 
-[tool.cibuildwheel.macos]
-# we do not want delocate to relocate the tableauhyperapi.lib as our CMake
-# config already handles that, and the tableauhyperapi.lib necessicates
-# the hyper bin being relative to it, which delocate does not know about
-repair-wheel-command = """
-delocate-listdeps {wheel} && delocate-wheel  --require-archs {delocate_archs} -w {dest_dir} {wheel}
-"""
+[tool.meson-python.args]
+compile = ['-v']
+install = ['--skip-subprojects']
 
 [tool.cibuildwheel.windows]
 before-build = "python -m pip install delvewheel"

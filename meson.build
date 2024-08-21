@@ -8,10 +8,8 @@ project(
 )
 
 py = import('python').find_installation()
-nanoarrow_dep = dependency(
-    'nanoarrow',
-)
-nanobind_dep = dependency('nanobind')
+nanoarrow_dep = dependency('nanoarrow', static: true)
+nanobind_dep = dependency('nanobind', static: true)
 
 py.extension_module(
     'capsule_bug',
