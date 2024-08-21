@@ -41,3 +41,7 @@ test-requires = ["pytest", "pyarrow"]
 
 [tool.meson-python.args]
 install = ['--skip-subprojects']
+
+[tool.cibuildwheel.windows]
+before-build = "python -m pip install delvewheel"
+repair-wheel-command = "python -m delvewheel repair -v --add-path C:/Windows/System32 -w {dest_dir} {wheel}"
