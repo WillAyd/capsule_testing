@@ -1,6 +1,6 @@
 import pyarrow as pa
 
-from capsule_bug import capsule_bug
+import capsule_bug
 
 def test_bug():
     schema = pa.schema([("col", pa.decimal128(38, 10))])

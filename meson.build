@@ -10,6 +10,7 @@ project(
 py = import('python').find_installation()
 nanoarrow_dep = dependency(
     'nanoarrow',
+    default_options: ['default_library=static'],
 )
 nanobind_dep = dependency('nanobind')
 
