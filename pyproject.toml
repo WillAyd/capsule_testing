@@ -1,0 +1,39 @@
+[build-system]
+requires = [
+  'meson-python',
+  'meson',
+  'cmake',  # for nanobind
+  'wheel',
+]
+
+build-backend= 'mesonpy'
+
+[project]
+name = 'capsule_bug'
+version = '0.0.1'
+description = 'MRE for testing bugs between python and nanoarrow'
+authors = [
+  { name = 'Will Ayd', email='william.ayd@icloud.com' },
+]
+requires-python = '>=3.9'
+classifiers = [
+    'Development Status :: 2 - Pre-Alpha',
+    'Environment :: Console',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: Apache Software License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Topic :: Scientific/Engineering'
+]
+
+[tool.cibuildwheel]
+build = "cp39-*64 cp310-*64 cp311-*64 cp312-*64"
+
+test-command = "python -m pytest {project}/tests"
+test-requires = ["pytest", "pyarrow"]
